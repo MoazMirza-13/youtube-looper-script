@@ -1,3 +1,3 @@
 const videoId = "_38sG8ANXKw";
-const startTime = 100;
-const endTime = 150;
+const startTime = "1:40";
+const endTime = "2:27";

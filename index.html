@@ -16,6 +16,8 @@
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
       let player;
+      let startTimeInSeconds;
+      let endTimeInSeconds;
 
       function onYouTubeIframeAPIReady() {
         player = new YT.Player("player", {
@@ -28,9 +30,13 @@
       }
 
       function onPlayerReady(event) {
+        // Convert startTime and endTime from "minutes:seconds" to seconds
+        startTimeInSeconds = convertToSeconds(startTime);
+        endTimeInSeconds = convertToSeconds(endTime);
+
         // Use a timeout to ensure the player is ready
         setTimeout(() => {
-          player.seekTo(startTime);
+          player.seekTo(startTimeInSeconds);
           player.playVideo();
         }, 1000); // Adjust delay as needed
       }
@@ -43,12 +49,17 @@
 
       function checkTime() {
         const currentTime = player.getCurrentTime();
-        if (currentTime >= endTime) {
-          player.seekTo(startTime);
+        if (currentTime >= endTimeInSeconds) {
+          player.seekTo(startTimeInSeconds);
         }
         if (player.getPlayerState() === YT.PlayerState.PLAYING) {
           setTimeout(checkTime, 1000);
         }
+      }
+
+      function convertToSeconds(time) {
+        const [minutes, seconds] = time.split(":").map(Number);
+        return minutes * 60 + seconds;
       }
 
       // Create a div element for the player
