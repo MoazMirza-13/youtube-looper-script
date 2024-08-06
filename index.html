@@ -14,12 +14,12 @@
       var firstScriptTag = document.getElementsByTagName("script")[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      // Extract the video ID from your link
-      var videoId = "_38sG8ANXKw"; // Extracted video ID from your link
+      // Replace with your video ID
+      var videoId = "_38sG8ANXKw"; // Example video ID
 
       var player;
-      var startTime = 83; // 1:23 in seconds
-      var endTime = 119; // 1:59 in seconds
+      var startTime = 100; // 1:40 in seconds
+      var endTime = 150; // End time in seconds
 
       function onYouTubeIframeAPIReady() {
         player = new YT.Player("player", {
@@ -32,7 +32,11 @@
       }
 
       function onPlayerReady(event) {
-        event.target.playVideo();
+        // Use a timeout to ensure the player is ready
+        setTimeout(function () {
+          player.seekTo(startTime);
+          player.playVideo();
+        }, 1000); // Adjust delay as needed
       }
 
       function onPlayerStateChange(event) {
