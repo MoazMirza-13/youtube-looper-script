@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Looper</title>
+  </head>
+  <body>
+    <div id="player"></div>
+    <script>
+      // Load the YouTube IFrame API
+      var tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // Extract the video ID from your link
+      var videoId = "_38sG8ANXKw"; // Extracted video ID from your link
+
+      var player;
+      var startTime = 83; // 1:23 in seconds
+      var endTime = 119; // 1:59 in seconds
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          videoId: videoId,
+          events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+          },
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+          checkTime();
+        }
+      }
+
+      function checkTime() {
+        const currentTime = player.getCurrentTime();
+        if (currentTime >= endTime) {
+          player.seekTo(startTime);
+        }
+        if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+          setTimeout(checkTime, 1000);
+        }
+      }
+
+      // Create a div element for the player
+      var playerDiv = document.createElement("div");
+      playerDiv.id = "player";
+      document.body.appendChild(playerDiv);
+    </script>
+  </body>
+</html>
