@@ -7,19 +7,15 @@
   </head>
   <body>
     <div id="player"></div>
+    <script src="config.js"></script>
     <script>
       // Load the YouTube IFrame API
-      var tag = document.createElement("script");
+      const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName("script")[0];
+      const firstScriptTag = document.getElementsByTagName("script")[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      // Replace with your video ID
-      var videoId = "_38sG8ANXKw"; // Example video ID
-
-      var player;
-      var startTime = 100; // 1:40 in seconds
-      var endTime = 150; // End time in seconds
+      let player;
 
       function onYouTubeIframeAPIReady() {
         player = new YT.Player("player", {
@@ -33,7 +29,7 @@
 
       function onPlayerReady(event) {
         // Use a timeout to ensure the player is ready
-        setTimeout(function () {
+        setTimeout(() => {
           player.seekTo(startTime);
           player.playVideo();
         }, 1000); // Adjust delay as needed
@@ -56,7 +52,7 @@
       }
 
       // Create a div element for the player
-      var playerDiv = document.createElement("div");
+      const playerDiv = document.createElement("div");
       playerDiv.id = "player";
       document.body.appendChild(playerDiv);
     </script>
